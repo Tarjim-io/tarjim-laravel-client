@@ -1,8 +1,8 @@
 <?php
 
-namespace Sentry\Laravel;
+namespace Tarjim\Laravel;
 
-use Sentry\Laravel\Console\Commands\ExportTarjimPhpLanguagesCommand;
+use Tarjim\Laravel\Console\Commands\ExportTarjimPhpLanguagesCommand;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -16,7 +16,7 @@ class ServiceProvider extends BaseServiceProvider
 		if ($this->app->runningInConsole()) {
 			//if ($this->app instanceof Laravel) {
 			//	$this->publishes([
-			//		__DIR__ . '/../../../config/sentry.php' => config_path(static::$abstract . '.php'),
+			//		__DIR__ . '/../../../config/tarjim.php' => config_path(static::$abstract . '.php'),
 			//	], 'config');
 			//}
 
