@@ -1,0 +1,27 @@
+{
+  "name": "joylab/tarjim-laravel",
+  "type": "project",
+  "description": "Laravel SDK for Tarjim (https://tarjim.io/)",
+  "keywords": [
+    "laravel",
+    "tarjim",
+    "translations"
+  ],
+  "license": "MIT",
+  "require": {
+    "joylab/tarjim-php-client": "^1.1",
+    "illuminate/support": "^10.42"
+  },
+  "autoload": {
+    "psr-0": {
+      "Tarjim\\Laravel\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Tarjim\\Laravel\\ServiceProvider"
+      ]
+    }
+  }
+}
