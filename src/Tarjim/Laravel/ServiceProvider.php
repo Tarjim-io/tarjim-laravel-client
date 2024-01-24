@@ -2,7 +2,9 @@
 
 namespace Tarjim\Laravel;
 
+use Illuminate\Contracts\Http\Kernel;
 use Tarjim\Laravel\Console\ExportTarjimPhpLanguagesCommand;
+use Tarjim\Laravel\Http\TarjimTranslationMiddleware;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -13,6 +15,13 @@ class ServiceProvider extends BaseServiceProvider
 	public function boot(): void
 	{
 
+    // Register middleware
+    $httpKernel = $this->app->make(HttpKernelInterface::class);
+    if ($httpKernel instanceof HttpKernel) {
+      $httpKernel->pushMiddleware(TarjimTranslationMiddleware::class);
+    }
+
+    // Register artisan commands
 		if ($this->app->runningInConsole()) {
 			//if ($this->app instanceof Laravel) {
 			//	$this->publishes([
