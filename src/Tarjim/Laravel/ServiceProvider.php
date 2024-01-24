@@ -16,7 +16,7 @@ class ServiceProvider extends BaseServiceProvider
 	{
 
     // Register middleware
-    $httpKernel = $this->app->make(HttpKernelInterface::class);
+    $httpKernel = $this->app->make(Kernel::class);
     if ($httpKernel instanceof HttpKernel) {
       $httpKernel->pushMiddleware(TarjimTranslationMiddleware::class);
     }
