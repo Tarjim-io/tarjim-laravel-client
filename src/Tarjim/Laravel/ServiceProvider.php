@@ -2,7 +2,7 @@
 
 namespace Tarjim\Laravel;
 
-use Tarjim\Laravel\Console\Commands\ExportTarjimPhpLanguagesCommand;
+use Tarjim\Laravel\Console\ExportTarjimPhpLanguagesCommand;
 
 class ServiceProvider extends BaseServiceProvider
 {
