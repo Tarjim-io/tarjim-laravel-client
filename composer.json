@@ -1,6 +1,6 @@
 {
-  "name": "joylab/tarjim-laravel",
-  "type": "project",
+  "name": "joylab/tarjim-laravel-client",
+  "type": "library",
   "description": "Laravel SDK for Tarjim (https://tarjim.io/)",
   "keywords": [
     "laravel",
