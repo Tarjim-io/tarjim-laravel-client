@@ -23,7 +23,7 @@ class ExportTarjimPhpLanguagesCommand extends Command
 	 *
 	 * @var string
 	 */
-	protected $description = 'Command description';
+	protected $description = 'Download and merge tarjim translations into /lang dir as PHP format';
 
 	protected $error_message = null;
 	protected $error_full_response = null;

@@ -23,14 +23,13 @@ class ServiceProvider extends BaseServiceProvider
 
     // Register artisan commands
 		if ($this->app->runningInConsole()) {
-			//if ($this->app instanceof Laravel) {
-			//	$this->publishes([
-			//		__DIR__ . '/../../../config/tarjim.php' => config_path(static::$abstract . '.php'),
-			//	], 'config');
-			//}
-
 			$this->registerArtisanCommands();
 		}
+
+    // Merge configs
+		$this->mergeConfigFrom(
+			__DIR__.'/../../../config/tarjim.php', 'tarjim'
+		);
 	}
 
 	/**
