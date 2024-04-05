@@ -1,6 +1,6 @@
 <?php
 
-namespace Tarjim\Laravel\Console;
+namespace Tarjim\Laravel\Console\Commands;
 
 use Illuminate\Console\Command;
 

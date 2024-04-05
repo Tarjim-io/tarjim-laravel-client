@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Tarjim\Laravel\Console\Commands;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Console\Command;
 
-class ExportTarjimJsonLanguages extends Command
+class ExportTarjimJsonLanguagesCommand extends Command
 {
     /**
      * The name and signature of the console command.
