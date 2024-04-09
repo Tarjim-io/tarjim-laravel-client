@@ -16,7 +16,7 @@ The `tarjim-laravel-client` is a Laravel package designed to facilitate the inte
 
 2. **Publish Configuration**
 
-   Publish the package configuration to your application's config directory: `php artisan vendor:publish --provider="Tarjim\\Laravel\\TarjimServiceProvider"`
+   Publish the package configuration to your application's config directory: `php artisan vendor:publish --provider="Tarjim\Laravel\TarjimServiceProvider"`
 
 3. **Configure**
 
