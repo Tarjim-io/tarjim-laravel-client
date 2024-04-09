@@ -4,10 +4,10 @@ namespace Tarjim\Laravel;
 
 use Illuminate\Contracts\Http\Kernel;
 use Joylab\TarjimPhpClient\TarjimClient;
-use Tarjim\Laravel\Config\TarjimConfig;
 use Tarjim\Laravel\Commands\ImportTarjimJsonTranslationsCommand;
 use Tarjim\Laravel\Commands\ImportTarjimPhpTranslationsCommand;
 use Tarjim\Laravel\Commands\UpdateTarjimTranslationsCacheCommand;
+use Tarjim\Laravel\Config\TarjimConfig;
 use Tarjim\Laravel\Middleware\TarjimLocalizationMiddleware;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -18,6 +18,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 	 */
 	public function boot(): void
 	{
+    $this->publishes([
+      __DIR__.'/../config/tarjim.php' => config_path('tarjim.php'),
+    ], 'tarjim-config');
+
     // Register artisan commands
 		if ($this->app->runningInConsole()) {
 			$this->registerArtisanCommands();
