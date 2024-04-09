@@ -5,10 +5,10 @@ namespace Tarjim\Laravel;
 use Illuminate\Contracts\Http\Kernel;
 use Joylab\TarjimPhpClient\TarjimClient;
 use Tarjim\Laravel\Config\TarjimConfig;
-use Tarjim\Laravel\Console\Commands\ImportTarjimJsonTranslationsCommand;
-use Tarjim\Laravel\Console\Commands\ImportTarjimPhpTranslationsCommand;
-use Tarjim\Laravel\Console\Commands\UpdateTarjimTranslationsCacheCommand;
-use Tarjim\Laravel\Http\TarjimLocalizationMiddleware;
+use Tarjim\Laravel\Commands\ImportTarjimJsonTranslationsCommand;
+use Tarjim\Laravel\Commands\ImportTarjimPhpTranslationsCommand;
+use Tarjim\Laravel\Commands\UpdateTarjimTranslationsCacheCommand;
+use Tarjim\Laravel\Middleware\TarjimLocalizationMiddleware;
 
 class ServiceProvider extends BaseServiceProvider
 {

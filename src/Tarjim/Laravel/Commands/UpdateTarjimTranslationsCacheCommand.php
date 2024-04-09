@@ -1,6 +1,6 @@
 <?php
 
-namespace Tarjim\Laravel\Console\Commands;
+namespace Tarjim\Laravel\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;

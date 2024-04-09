@@ -1,6 +1,6 @@
 <?php
 
-namespace Tarjim\Laravel\Http;
+namespace Tarjim\Laravel\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
