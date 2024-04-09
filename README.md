@@ -1,5 +1,3 @@
-# README.md for tarjim-laravel-client Library
-
 ## Overview
 
 The `tarjim-laravel-client` is a Laravel package designed to facilitate the integration of Tarjim translations into Laravel applications. It allows for seamless synchronization and management of translation files and localization settings between your Laravel application and the Tarjim service.
