@@ -10,7 +10,7 @@ use Tarjim\Laravel\Commands\ImportTarjimPhpTranslationsCommand;
 use Tarjim\Laravel\Commands\UpdateTarjimTranslationsCacheCommand;
 use Tarjim\Laravel\Middleware\TarjimLocalizationMiddleware;
 
-class ServiceProvider extends BaseServiceProvider
+class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
 
 	/**
@@ -25,7 +25,7 @@ class ServiceProvider extends BaseServiceProvider
 
     // Merge configs
 		$this->mergeConfigFrom(
-			__DIR__.'/../../../config/tarjim.php', 'tarjim'
+			__DIR__.'/../config/tarjim.php', 'tarjim'
 		);
 	}
 
