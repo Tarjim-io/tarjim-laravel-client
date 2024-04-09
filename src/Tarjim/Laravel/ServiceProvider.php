@@ -3,8 +3,11 @@
 namespace Tarjim\Laravel;
 
 use Illuminate\Contracts\Http\Kernel;
-use Tarjim\Laravel\Console\Commands\ExportTarjimPhpLanguagesCommand;
-use Tarjim\Laravel\Console\Commands\ExportTarjimJsonLanguagesCommand;
+use Joylab\TarjimPhpClient\TarjimClient;
+use Tarjim\Laravel\Config\TarjimConfig;
+use Tarjim\Laravel\Console\Commands\ImportTarjimJsonTranslationsCommand;
+use Tarjim\Laravel\Console\Commands\ImportTarjimPhpTranslationsCommand;
+use Tarjim\Laravel\Console\Commands\UpdateTarjimTranslationsCacheCommand;
 use Tarjim\Laravel\Http\TarjimLocalizationMiddleware;
 
 class ServiceProvider extends BaseServiceProvider
@@ -15,17 +18,6 @@ class ServiceProvider extends BaseServiceProvider
 	 */
 	public function boot(): void
 	{
-
-    // TODO properly handle TarjimLocalizationMiddleware
-    // Registering as route middleware
-    //$router = $this->app['router'];
-    //$router->aliasMiddleware('setLanguage', TarjimLocalizationMiddleware::class);
-    // Register middleware
-    //$httpKernel = $this->app->make(Kernel::class);
-    ////if ($httpKernel instanceof HttpKernel) {
-    //  $httpKernel->pushMiddleware(TarjimLocalizationMiddleware::class);
-    ////}
-
     // Register artisan commands
 		if ($this->app->runningInConsole()) {
 			$this->registerArtisanCommands();
@@ -37,14 +29,28 @@ class ServiceProvider extends BaseServiceProvider
 		);
 	}
 
+  /**
+   *
+   */
+	public function register(): void
+	{
+    $this->app->singleton(TarjimClient::class, function ($app) {
+      $config = config('tarjim.path');
+      return new TarjimClient($config);
+    });
+
+    $this->app->singleton(TarjimConfig::class);
+	}
+
 	/**
 	 * Register the artisan commands.
 	 */
 	protected function registerArtisanCommands(): void
 	{
 		$this->commands([
-			ExportTarjimPhpLanguagesCommand::class,
-			ExportTarjimJsonLanguagesCommand::class
+			ImportTarjimPhpTranslationsCommand::class,
+			ImportTarjimJsonTranslationsCommand::class,
+			UpdateTarjimTranslationsCacheCommand::class
 		]);
 	}
 }

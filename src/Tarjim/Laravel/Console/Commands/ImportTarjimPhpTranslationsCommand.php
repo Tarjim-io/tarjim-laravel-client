@@ -3,20 +3,20 @@
 namespace Tarjim\Laravel\Console\Commands;
 
 use Illuminate\Console\Command;
-
+use Tarjim\Laravel\Config\TarjimConfig;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Exception\ClientException;
 use ZipArchive;
 
-class ExportTarjimPhpLanguagesCommand extends Command
+class ImportTarjimPhpTranslationsCommand extends Command
 {
 	/**
 	 * The name and signature of the console command.
 	 *
 	 * @var string
 	 */
-	protected $signature = 'tarjim:export-lang-php';
+	protected $signature = 'tarjim:import-translations-php';
 
 	/**
 	 * The console command description.
@@ -25,8 +25,18 @@ class ExportTarjimPhpLanguagesCommand extends Command
 	 */
 	protected $description = 'Download and merge tarjim translations into /lang dir as PHP format';
 
-	protected $error_message = null;
-	protected $error_full_response = null;
+	protected $error_message;
+	protected $error_full_response;
+  protected $tarjimConfig;
+
+  /**
+   *
+   */
+  public function __construct(TarjimConfig $tarjimConf)
+  {
+    parent::__construct();
+    $this->tarjimConfig = $tarjimConf;
+  }
 
 	/**
 	 * Execute the console command.
@@ -45,7 +55,7 @@ class ExportTarjimPhpLanguagesCommand extends Command
 	private function downloadAndUnzip($zipPath, $extractPath)
 	{
     // Download file content
-		$this->info('Downloading language files...');
+		$this->info('Downloading translation files...');
     $tarjimPHPExportContent = $this->tarjimPHPExportContent();
 
     // No content return from tarjim API
@@ -54,14 +64,15 @@ class ExportTarjimPhpLanguagesCommand extends Command
       exit(0);
     }
 
-		file_put_contents($zipPath, $this->tarjimPHPExportContent());
+    // Write PHP langs in zip file
+    File::put($zipPath, $this->tarjimPHPExportContent());
 
     // Unzip downloaded file
-		$this->info('Unzipping language files...');
+		$this->info('Unzipping translation files...');
 		$zip = new ZipArchive;
 		$zip->open($zipPath);
 		if ($zip->extractTo($extractPath) && $zip->close()) {
-			$this->info('Language files downloaded and unzipped successfully.');
+			$this->info('Translation files downloaded and unzipped successfully.');
 		} else {
 			$this->error('Failed to unzip language files.');
 		}
@@ -75,20 +86,21 @@ class ExportTarjimPhpLanguagesCommand extends Command
 	 */
 	public function tarjimPHPExportContent()
 	{
+
 		$client = new \GuzzleHttp\Client();
 		$options = [
 			'multipart' => [
 				[
 					'name' => 'project_id',
-					'contents' => config('tarjim.project_id')
+					'contents' => $this->tarjimConfig->projectId
 				],
 				[
 					'name' => 'apikey',
-					'contents' => config('tarjim.apikey')
+					'contents' => $this->tarjimConfig->apikey
 				],
 				[
 					'name' => 'mapping_languages',
-					'contents' => json_encode(config('tarjim.languages_mappings')),
+					'contents' => json_encode($this->tarjimConfig->localesMappings),
 				],
 				[
 					'name' => 'key_case_preserve',
