@@ -7,21 +7,21 @@ use Illuminate\Support\Facades\File;
 use Joylab\TarjimPhpClient\TarjimClient;
 use Tarjim\Laravel\Config\TarjimConfig;
 
-class ImportTarjimJsonTranslationsCommand extends Command
+class ExportTarjimJsonCommand extends Command
 {
   /**
    * The name and signature of the console command.
    *
    * @var string
    */
-  protected $signature = 'tarjim:import-translations-json';
+  protected $signature = 'tarjim:export-json';
 
   /**
    * The console command description.
    *
    * @var string
    */
-  protected $description = 'Download and merge tarjim translations into /lang dir as JSON format';
+  protected $description = 'Download and merge tarjim keys into /lang dir as JSON format';
 
   protected $tarjimConfig;
   protected $tarjimClient;
@@ -45,11 +45,11 @@ class ImportTarjimJsonTranslationsCommand extends Command
   public function handle()
   {
     // Fetch translations as JSON
-		$this->info('Fetching JSON translations...');
+		$this->info('Fetching keys...');
     $languages = $this->getTranslationsAsJson();
 
     // Use language mappings as laravel lang file names
-    $this->info('Writing translations to lang files...');
+    $this->info('Writing keys to lang files...');
     $locMappings = $this->tarjimConfig->localesMappings;
     foreach ($languages as $lang => $translations) {
       $fileName = $lang;

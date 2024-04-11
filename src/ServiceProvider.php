@@ -4,9 +4,9 @@ namespace Tarjim\Laravel;
 
 use Illuminate\Contracts\Http\Kernel;
 use Joylab\TarjimPhpClient\TarjimClient;
-use Tarjim\Laravel\Commands\ImportTarjimJsonTranslationsCommand;
-use Tarjim\Laravel\Commands\ImportTarjimPhpTranslationsCommand;
-use Tarjim\Laravel\Commands\UpdateTarjimTranslationsCacheCommand;
+use Tarjim\Laravel\Commands\ExportTarjimJsonCommand;
+use Tarjim\Laravel\Commands\ExportTarjimPhpCommand;
+use Tarjim\Laravel\Commands\RefreshTarjimCacheCommand;
 use Tarjim\Laravel\Config\TarjimConfig;
 use Tarjim\Laravel\Middleware\TarjimLocalizationMiddleware;
 
@@ -52,9 +52,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 	protected function registerArtisanCommands(): void
 	{
 		$this->commands([
-			ImportTarjimPhpTranslationsCommand::class,
-			ImportTarjimJsonTranslationsCommand::class,
-			UpdateTarjimTranslationsCacheCommand::class
+			ExportTarjimPhpCommand::class,
+			ExportTarjimJsonCommand::class,
+			RefreshTarjimCacheCommand::class
 		]);
 	}
 }

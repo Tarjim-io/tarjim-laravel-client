@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Joylab\TarjimPhpClient\TarjimClient;
 
-class UpdateTarjimTranslationsCacheCommand extends Command
+class RefreshTarjimCacheCommand extends Command
 {
   /**
    * The name and signature of the console command.
    *
    * @var string
    */
-  protected $signature = 'tarjim:update-translations-cache';
+  protected $signature = 'tarjim:refresh-cache';
 
   /**
    * The console command description.
    *
    * @var string
    */
-  protected $description = 'Update local translations cache';
+  protected $description = 'Update local Tarjim cache';
 
   protected $tarjimClient;
 

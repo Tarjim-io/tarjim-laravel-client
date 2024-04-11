@@ -9,21 +9,21 @@ use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Exception\ClientException;
 use ZipArchive;
 
-class ImportTarjimPhpTranslationsCommand extends Command
+class ExportTarjimPhpCommand extends Command
 {
 	/**
 	 * The name and signature of the console command.
 	 *
 	 * @var string
 	 */
-	protected $signature = 'tarjim:import-translations-php';
+	protected $signature = 'tarjim:export-php';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Download and merge tarjim translations into /lang dir as PHP format';
+	protected $description = 'Download and merge tarjim keys into /lang dir as PHP format';
 
 	protected $error_message;
 	protected $error_full_response;
@@ -55,7 +55,7 @@ class ImportTarjimPhpTranslationsCommand extends Command
 	private function downloadAndUnzip($zipPath, $extractPath)
 	{
     // Download file content
-		$this->info('Downloading translation files...');
+		$this->info('Downloading Tarjim keys...');
     $tarjimPHPExportContent = $this->tarjimPHPExportContent();
 
     // No content return from tarjim API
@@ -68,13 +68,13 @@ class ImportTarjimPhpTranslationsCommand extends Command
     File::put($zipPath, $this->tarjimPHPExportContent());
 
     // Unzip downloaded file
-		$this->info('Unzipping translation files...');
+		$this->info('Unzipping files...');
 		$zip = new ZipArchive;
 		$zip->open($zipPath);
 		if ($zip->extractTo($extractPath) && $zip->close()) {
-			$this->info('Translation files downloaded and unzipped successfully.');
+			$this->info('Tarjim keys downloaded and injected successfully.');
 		} else {
-			$this->error('Failed to unzip language files.');
+			$this->error('Failed to unzip files.');
 		}
 
 		// Clean up the downloaded zip file
