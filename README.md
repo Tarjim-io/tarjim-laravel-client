@@ -1,6 +1,6 @@
 ## Overview
 
-The `tarjim-laravel-client` is a Laravel package designed to facilitate the integration of Tarjim translations into Laravel applications. It allows for seamless synchronization and management of translation files and localization settings between your Laravel application and the Tarjim service.
+The `tarjim-laravel-client` is a Laravel package designed to facilitate the integration of tarjim.io translations into Laravel applications. It allows for seamless synchronization and management of translation files and localization settings between your Laravel application and the Tarjim service.
 
 ## Features
 
@@ -16,7 +16,7 @@ The `tarjim-laravel-client` is a Laravel package designed to facilitate the inte
 
 2. **Publish Configuration**
 
-   Publish the package configuration to your application's config directory: `php artisan vendor:publish --provider="Tarjim\\Laravel\\TarjimServiceProvider"`
+   Publish the package configuration to your application's config directory: `php artisan vendor:publish --provider="Tarjim\Laravel\ServiceProvider"`
 
 3. **Configure**
 
@@ -44,6 +44,6 @@ Implement the `Tarjim\Laravel\Middleware\TarjimLocalizationMiddleware` in your `
 
 The package provides three Artisan commands to manage translations:
 
-- `php artisan tarjim:import-translations-php`: Imports translations from Tarjim and generates PHP files in the `lang/` directory for Laravel's `__` function.
-- `php artisan tarjim:import-translations-json`: Imports translations from Tarjim and generates JSON files in the `lang/` directory for Laravel's `__` function.
-- `php artisan tarjim:update-translations-cache`: Updates the local Tarjim translations cache from the remote Tarjim service to ensure your application's translations are always up to date.
+- `php artisan tarjim:import--php`: Exports keys from tarjim.io as PHP files into the lang/ directory for Laravel's `__` function.
+- `php artisan tarjim:import--json`: Exports keys from tarjim.io as JSON files into the lang/ directory for Laravel's `__` function.
+- `php artisan tarjim:refresh-cache`: Refreshes the local tarjim.io keys cache from the remote tarjim.io service to ensure your application's keys up to date.
