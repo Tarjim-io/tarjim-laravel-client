@@ -44,6 +44,6 @@ Implement the `Tarjim\Laravel\Middleware\TarjimLocalizationMiddleware` in your `
 
 The package provides three Artisan commands to manage translations:
 
-- `php artisan tarjim:import-php`: Exports keys from tarjim.io as PHP files into the lang/ directory for Laravel's `__` function.
-- `php artisan tarjim:import-json`: Exports keys from tarjim.io as JSON files into the lang/ directory for Laravel's `__` function.
+- `php artisan tarjim:export-php`: Exports keys from tarjim.io as PHP files into the lang/ directory for Laravel's `__` function.
+- `php artisan tarjim:export-json`: Exports keys from tarjim.io as JSON files into the lang/ directory for Laravel's `__` function.
 - `php artisan tarjim:refresh-cache`: Refreshes the local tarjim.io keys cache from the remote tarjim.io service to ensure your application's keys up to date.
