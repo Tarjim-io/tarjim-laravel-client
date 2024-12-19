@@ -9,7 +9,8 @@ class TarjimConfig
 	public $cacheDir;
 	public $logsDir;
 	public $apikey;
-	public $defaultNamespace;
+	public $namespace;
+  public $default_namespace;
 	public $localesMappings;
 	public $availableLocales;
 	public $additionalnamespaces;
@@ -24,12 +25,16 @@ class TarjimConfig
     $this->cacheDir = config('tarjim.cache_dir');
     $this->logsDir = config('tarjim.logs_dir');
     $this->apikey = config('tarjim.apikey');
-    $this->defaultNamespace = config('tarjim.default_namespace');
+    $this->namespace = config('tarjim.namespace');
+    $this->default_namespace = config('tarjim.default_namespace');
     $this->localesMappings = config('tarjim.locales_mappings', []);
     $this->availableLocales = config('tarjim.available_locales', []);
     $this->fallbackLocale = config('tarjim.fallback_locale');
     $this->additionalnamespaces = config('tarjim.additional_namespaces');
 		$this->updateCacheTimeout = config('tarjim.update_cache_timeout');
+    $this->verified = config('tarjim.verified');
+    $this->lang_path = lang_path();
+  
   }
 
   /**

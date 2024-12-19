@@ -31,6 +31,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 		$this->mergeConfigFrom(
 			__DIR__.'/../config/tarjim.php', 'tarjim'
 		);
+		
 	}
 
   /**
@@ -44,6 +45,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     });
 
     $this->app->singleton(TarjimConfig::class);
+	
 	}
 
 	/**
@@ -51,6 +53,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 	 */
 	protected function registerArtisanCommands(): void
 	{
+	
 		$this->commands([
 			ExportTarjimPhpCommand::class,
 			ExportTarjimJsonCommand::class,

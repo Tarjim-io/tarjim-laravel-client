@@ -29,7 +29,7 @@ The `tarjim-laravel-client` is a Laravel package designed to facilitate the inte
 5. **Run Artisan Commands**
 
    Utilize the provided Artisan commands to manage your translations.
-   
+
 ## Configuration
 
 ### Config File
