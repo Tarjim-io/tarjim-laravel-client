@@ -181,7 +181,6 @@ class ExportTarjimJsonCommand extends Command
 
 		// Send Guzzle request
 		$request = new \GuzzleHttp\Psr7\Request('POST', 'https://app.tarjim.io/api/v1/translationkeys/jsonByNameSpaces');
-		// $request = new \GuzzleHttp\Psr7\Request('POST', 'http://localhost:8080/api/v1/translationkeys/jsonByNameSpaces');
 
 
 		try {
