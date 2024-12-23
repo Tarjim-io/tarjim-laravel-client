@@ -6,200 +6,145 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Joylab\TarjimPhpClient\TarjimClient;
 use Tarjim\Laravel\Config\TarjimConfig;
+use Tarjim\Laravel\Helpers\Helpers;
+
 
 class ExportTarjimJsonCommand extends Command
 {
-  /**
-   * The name and signature of the console command.
-   *
-   * @var string
-   */
-  // protected $signature = 'tarjim:export-json';
+	/**
+	 * The name and signature of the console command.
+	 *
+	 * @var string
+	 */
+	// protected $signature = 'tarjim:export-json';
 
-  protected $signature = 'tarjim:export-json
+	protected $signature = 'tarjim:export-json
 	{--lang_path= : Custom language path. If not valid, defaults to lang_path()}
 	{--localesMappings= : JSON string for language mappings (e.g., \'{"ar":"ar_LB","en":"en_US"}\')}
 	{--projectId= : Project ID}
 	{--namespace=* : Namespace(s), can be a string or array}
-  {--verified : Verification flag (boolean)}
+	{--verified= : Verification flag (boolean)}
 	{--apikey= : API key for the service}';
 
 	protected $optionMapping = [
 		'localesMappings' => ['property' => 'localesMappings', 'isJson' => true],
 		'projectId' => ['property' => 'projectId', 'isArray' => false],
 		'namespace' => ['property' => 'namespace', 'isArray' => true],
-    'verified' => ['property' => 'verified', 'isArray' => false],
+		'verified' => ['property' => 'verified', 'isArray' => false],
 		'apikey' => ['property' => 'apikey', 'isArray' => false],
 	];
 
 
-  /**
-   * The console command description.
-   *
-   * @var string
-   */
-  protected $description = 'Download and merge tarjim keys into /lang dir as JSON format';
+	/**
+	 * The console command description.
+	 *
+	 * @var string
+	 */
+	protected $description = 'Download and merge tarjim keys into /lang dir as JSON format';
 
-  protected $tarjimConfig;
-  protected $tarjimClient;
+	protected $tarjimConfig;
+	protected $tarjimClient;
 
-  /**
-   *
-   */
-  public function __construct(
-    TarjimConfig $tarjimConf,
-    TarjimClient $tarjimClt
-  )
-  {
-    parent::__construct();
-    $this->tarjimConfig = $tarjimConf;
-    $this->tarjimClient = $tarjimClt;
-  }
+	/**
+	 *
+	 */
+	public function __construct(
+		TarjimConfig $tarjimConf,
+		TarjimClient $tarjimClt
+	) {
+		parent::__construct();
+		$this->tarjimConfig = $tarjimConf;
+		$this->tarjimClient = $tarjimClt;
+	}
 
-  /**
-   * Execute the console command.
-   */
-  public function handle()
-  {
-    $this->validateOptions();
-    $this->processLangPath();
+	/**
+	 * Execute the console command.
+	 */
+	public function handle()
+	{
+		$helpers = new Helpers();
 
-    // Fetch translations as JSON
+		$helpers->validateOptions($this->optionMapping, $this->options(), $this->tarjimConfig, $this);
+		$helpers->processLangPath($this->option('lang_path'), $this->tarjimConfig, $this);
+		
+
+		// Fetch translations as JSON
 		$this->info('Fetching keys...');
-    $languages = $this->getTranslationsAsJson();
+		$languages = $this->getTranslationsAsJson();
 
-    if(! $languages) {
-      return;
-    }
+		if (!$languages) {
+			return;
+		}
 
-    // Use language mappings as laravel lang file names
-    $this->info('Writing keys to lang files...');
-    $locMappings = $this->tarjimConfig->localesMappings;
-    foreach ($languages as $lang => $translations) {
-      $fileName = $lang;
-      if (isset($locMappings[$lang])) {
-        $fileName = $locMappings[$lang];
-      }
-
-      // Create the language file
-      $filePath = $this->tarjimConfig->lang_path."/$fileName.json";
-      $parsedTranslations = $this->transformTranslationJsonToAssocArr($translations);
-      File::put($filePath, json_encode($parsedTranslations, JSON_PRETTY_PRINT));
-    }
-  }
-
-  private function validateOptions()
-	{
-		foreach ($this->optionMapping as $option => $config) {
-			$value = $this->option($option);
-			if (!empty($value)) {
-
-				// Handle boolean options
-				if (!empty($config['isBoolean'])) {
-					$this->tarjimConfig->{$config['property']} = (bool) $value;
-					$this->info("Updated {$config['property']} to " . ($value ? 'true' : 'false'));
-				} elseif (!empty($config['isJson'])) {
-					try {
-						$decodedValue = json_decode($value, true);
-
-						if (!is_array($decodedValue)) {
-							throw new \Exception("Invalid JSON format for {$option}");
-						}
-
-						$this->tarjimConfig->{$config['property']} = $decodedValue;
-						$this->info("Updated {$config['property']} to " . json_encode($decodedValue));
-					} catch (\Exception $e) {
-						$this->error("Error parsing {$option}: " . $e->getMessage());
-						return;
-					}
-				}
-				// Handle standard array options
-				elseif (!empty($config['isArray'])) {
-        
-					if(empty($value[0])) {
-						$value = '';
-					}
-					
-					$this->tarjimConfig->{$config['property']} = is_array($value) ? json_encode($value) : $value;
-
-					$this->info("Updated {$config['property']} to " .(is_array($value) ? implode(', ', $value) : $value));
-				} elseif (!is_null($value)) {
-					$this->tarjimConfig->{$config['property']} = $value;
-					$this->info("Updated {$config['property']} to {$value}");
-				}
+		// Use language mappings as laravel lang file names
+		$this->info('Writing keys to lang files...');
+		$locMappings = $this->tarjimConfig->localesMappings;
+		foreach ($languages as $lang => $translations) {
+			$fileName = $lang;
+			if (isset($locMappings[$lang])) {
+				$fileName = $locMappings[$lang];
 			}
+
+			// Create the language file
+			$filePath = $this->tarjimConfig->lang_path . "/$fileName.json";
+			$parsedTranslations = $this->transformTranslationJsonToAssocArr($translations);
+			File::put($filePath, json_encode($parsedTranslations, JSON_PRETTY_PRINT));
 		}
 	}
 
-  private function processLangPath()
+
+
+	/**
+	 *
+	 */
+	public function transformTranslationJsonToAssocArr($translations)
 	{
-		$customLangPath = $this->option('lang_path');
-
-		if ($customLangPath) {
-			if (!str_starts_with($customLangPath, '/') && !str_contains($customLangPath, ':')) {
-				$customLangPath = base_path($customLangPath);
-			}
-
-			if (File::exists($customLangPath)) {
-				$this->tarjimConfig->lang_path = $customLangPath;
-				$this->info("Custom language path set to: {$customLangPath}");
-			} else {
-				$this->warn("Provided lang_path '{$customLangPath}' does not exist. Defaulting to lang_path().");
-			}
+		$final = [];
+		foreach ($translations as $key => $val) {
+			$final[$key] = $val['value'];
 		}
 
-		$this->info("Final language path: {$this->tarjimConfig->lang_path}");
+		return $final;
 	}
 
-  /**
-   *
-   */
-  public function transformTranslationJsonToAssocArr($translations) {
-    $final = [];
-    foreach ($translations as $key => $val) {
-      $final[$key] = $val['value'];
-    }
+	/**
+	 *
+	 */
+	public function getTranslationsAsJson()
+	{
+		if (empty($this->tarjimConfig->namespace)) {
+			$this->error("No namespace provided. Please provide a namespace.");
+			return false;
+		}
 
-    return $final;
-  }
+		// $response = $this->tarjimClient->TarjimApiCaller->getLatestFromTarjim();
+		$response = $this->tarjimJsonExportContent();
 
-  /**
-   *
-   */
-  public function getTranslationsAsJson() {
-    if(empty($this->tarjimConfig->namespace)) {
-      $this->error("No namespace provided. Please provide a namespace.");
-      return false;
-    }
-   
-    // $response = $this->tarjimClient->TarjimApiCaller->getLatestFromTarjim();
-    $response = $this->tarjimJsonExportContent();
+		if (empty($response['result']['data']['results'])) {
+			return false;
+		}
+		if (is_array(json_decode($this->tarjimConfig->namespace)) && count(json_decode($this->tarjimConfig->namespace)) > 1) {
+			$result = [];
+			foreach (json_decode($this->tarjimConfig->namespace) as $namespace) {
+				$result = array_merge($result, $response['result']['data']['results'][$namespace]);
+			}
+			dd($result);
+			return $result;
+		}
+		if (is_array(json_decode($this->tarjimConfig->namespace)) && count(json_decode($this->tarjimConfig->namespace)) == 1) {
+			$this->tarjimConfig->namespace = json_decode($this->tarjimConfig->namespace)[0];
+		}
 
-    if (empty($response['result']['data']['results'])) {
-      return false;
-    }
-    if(is_array(json_decode($this->tarjimConfig->namespace)) && count(json_decode($this->tarjimConfig->namespace)) > 1){
-      $result = [];
-     foreach(json_decode($this->tarjimConfig->namespace) as $namespace) {
-      $result = array_merge($result,$response['result']['data']['results'][$namespace] );
-     }
-     dd($result);
-     return $result;
-    }
-    if(is_array(json_decode($this->tarjimConfig->namespace)) && count(json_decode($this->tarjimConfig->namespace)) == 1){
-      $this->tarjimConfig->namespace = json_decode($this->tarjimConfig->namespace)[0];
-    }
+		if (!isset($response['result']['data']['results'][$this->tarjimConfig->namespace])) {
+			$this->error("No translations found for namespace '{$this->tarjimConfig->namespace}'.");
+			return false;
+		}
 
-    if(!isset($response['result']['data']['results'][$this->tarjimConfig->namespace])) {
-      $this->error("No translations found for namespace '{$this->tarjimConfig->namespace}'.");
-      return false;
-    } 
 
-   
-    return $response['result']['data']['results'][$this->tarjimConfig->namespace];
-  }
+		return $response['result']['data']['results'][$this->tarjimConfig->namespace];
+	}
 
-  /**
+	/**
 	 *
 	 */
 	public function tarjimJsonExportContent()
@@ -222,9 +167,9 @@ class ExportTarjimJsonCommand extends Command
 				],
 				[
 					'name' => 'namespaces',
-					'contents' =>  $this->tarjimConfig->namespace,
-        ],
-        [
+					'contents' => $this->tarjimConfig->namespace,
+				],
+				[
 					'name' => 'verified',
 					'contents' => $this->tarjimConfig->verified,
 				]
@@ -243,7 +188,7 @@ class ExportTarjimJsonCommand extends Command
 			// Send request / return body
 			$res = $client->sendAsync($request, $options)->wait();
 
-			return json_decode($res->getBody(),true);
+			return json_decode($res->getBody(), true);
 
 		} catch (ClientException $e) {
 			// An exception was raised but there is an HTTP response body

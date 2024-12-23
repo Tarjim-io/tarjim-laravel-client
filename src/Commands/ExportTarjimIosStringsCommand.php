@@ -7,11 +7,11 @@ use Tarjim\Laravel\Config\TarjimConfig;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Exception\ClientException;
-use ZipArchive;
 use Tarjim\Laravel\Helpers\Helpers;
 
+use ZipArchive;
 
-class ExportTarjimPhpCommand extends Command
+class ExportTarjimIosStringsCommand extends Command
 {
 	/**
 	 * The name and signature of the console command.
@@ -19,20 +19,26 @@ class ExportTarjimPhpCommand extends Command
 	 * @var string
 	 */
 	// protected $signature = 'tarjim:export-php';
-	protected $signature = 'tarjim:export-php
+	protected $signature = 'tarjim:export-ios-strings
 	{--lang_path= : Custom language path. If not valid, defaults to lang_path()}
-	{--localesMappings= : JSON string for language mappings (e.g., \'{"ar":"ar_LB","en":"en_US"}\')}
 	{--projectId= : Project ID}
-	{--namespace=* : Namespace(s), can be a string or array}
+	{--namespace= : Namespace(s), can be a string or array}
 	{--verified= : Verification flag (boolean)}
+	{--split_files_by_namespace= : Split files by namespace (boolean)}
+	{--file_format= : File format e.g. %namespace%%language%%project_name%}
+	{--key_case=* : Array of key case options. Available options: key_case_preserve (default), key_case_to_upper, key_case_to_proper, key_case_to_lower, key_no_quotes, key_wrap_double_quote.}
 	{--apikey= : API key for the service}';
 
+
 	protected $optionMapping = [
-		'localesMappings' => ['property' => 'localesMappings', 'isJson' => true],
 		'projectId' => ['property' => 'projectId', 'isArray' => false],
 		'namespace' => ['property' => 'namespace', 'isArray' => true],
 		'verified' => ['property' => 'verified', 'isArray' => false],
 		'apikey' => ['property' => 'apikey', 'isArray' => false],
+		'split_files_by_namespace' => ['property' => 'split_files_by_namespace', 'isBoolean' => true],
+		'key_case' => ['property' => 'key_case', 'keyCase' => true],
+		'file_format' => ['property' => 'file_format', 'isArray' => false],
+
 	];
 
 	/**
@@ -40,7 +46,7 @@ class ExportTarjimPhpCommand extends Command
 	 *
 	 * @var string
 	 */
-	protected $description = 'Download and merge tarjim keys into /lang dir as PHP format';
+	protected $description = 'Download and merge tarjim keys into /lang dir as strings format';
 
 	protected $error_message;
 	protected $error_full_response;
@@ -66,13 +72,14 @@ class ExportTarjimPhpCommand extends Command
 
 		$helpers->validateOptions($this->optionMapping, $this->options(), $this->tarjimConfig, $this);
 		$helpers->processLangPath($this->option('lang_path'), $this->tarjimConfig, $this);
-		
+
 		$zipPath = storage_path('app/tarjim_php_export.zip');
 		// $extractPath = lang_path();
 		$extractPath = $this->tarjimConfig->lang_path;
 		$this->downloadAndUnzip($zipPath, $extractPath);
 	}
 
+	
 
 	/**
 	 * Download and unzip Tarjim php exported content
@@ -128,39 +135,61 @@ class ExportTarjimPhpCommand extends Command
 					'contents' => json_encode($this->tarjimConfig->localesMappings),
 				],
 				[
-					'name' => 'key_case_preserve',
-					'contents' => 'true'
+					'name' => 'key_case',
+					'contents' => json_encode($this->tarjimConfig->key_case),
 				],
 				[
 					'name' => 'namespace',
-					'contents' =>  $this->tarjimConfig->namespace,
+					'contents' => $this->tarjimConfig->namespace,
 				],
+				[
+					'name' => 'split_files_by_namespace',
+					'contents' => $this->tarjimConfig->split_files_by_namespace || false,
+				],
+				[
+                    'name' => 'file_format',
+                    'contents' => $this->tarjimConfig->file_format,
+                ],
+                
 				[
 					'name' => 'verified',
 					'contents' => $this->tarjimConfig->verified,
 				]
 			]
 		];
-
+		// dd($options);
 
 		// Send Guzzle request
-		$request = new \GuzzleHttp\Psr7\Request('POST', 'https://app.tarjim.io/api/v1/export-php');
-		// $request = new \GuzzleHttp\Psr7\Request('POST', 'http://localhost:8080/api/v1/export-php');
+		$request = new \GuzzleHttp\Psr7\Request('POST', 'https://app.tarjim.io/api/v1/export-ios-strings');
+		//  $request = new \GuzzleHttp\Psr7\Request('POST', 'http://localhost:8080/api/v1/export-ios-strings');
 
 
 		try {
 			// Send request / return body
 			$res = $client->sendAsync($request, $options)->wait();
-
+			// dd(json_decode($res->getBody()));
 			return $res->getBody();
 
 		} catch (ClientException $e) {
-			// An exception was raised but there is an HTTP response body
-			// with the exception (in case of 404 and similar errors)
+			// Get the response object
 			$response = $e->getResponse();
+			
+			// Get the response body as a string
 			$responseBodyAsString = $response->getBody()->getContents();
-			echo $response->getStatusCode() . PHP_EOL;
-			echo $responseBodyAsString;
+			
+			// Decode the JSON response
+			$responseBody = json_decode($responseBodyAsString, true);
+			
+			// Extract the status code
+			$statusCode = $response->getStatusCode();
+		
+			// Check if there's an error message
+			if (isset($responseBody['result']['error']['message'])) {
+				$this->error("Error {$statusCode}: " . $responseBody['result']['error']['message']);
+			} else {
+				// Fallback to printing the full response body if no specific error message exists
+				$this->error("HTTP {$statusCode}: " . $responseBodyAsString);
+			}
 		}
 
 		return false;

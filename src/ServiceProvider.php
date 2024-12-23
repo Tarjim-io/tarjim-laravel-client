@@ -6,6 +6,8 @@ use Illuminate\Contracts\Http\Kernel;
 use Joylab\TarjimPhpClient\TarjimClient;
 use Tarjim\Laravel\Commands\ExportTarjimJsonCommand;
 use Tarjim\Laravel\Commands\ExportTarjimPhpCommand;
+use Tarjim\Laravel\Commands\ExportTarjimIosStringsCommand;
+use Tarjim\Laravel\Commands\ExportTarjimAndroidXMLCommand;
 use Tarjim\Laravel\Commands\RefreshTarjimCacheCommand;
 use Tarjim\Laravel\Config\TarjimConfig;
 use Tarjim\Laravel\Middleware\TarjimLocalizationMiddleware;
@@ -56,6 +58,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 	
 		$this->commands([
 			ExportTarjimPhpCommand::class,
+			ExportTarjimIosStringsCommand::class,
+			ExportTarjimAndroidXMLCommand::class,
 			ExportTarjimJsonCommand::class,
 			RefreshTarjimCacheCommand::class
 		]);

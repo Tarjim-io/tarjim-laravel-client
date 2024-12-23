@@ -33,7 +33,11 @@ class TarjimConfig
     $this->additionalnamespaces = config('tarjim.additional_namespaces');
 		$this->updateCacheTimeout = config('tarjim.update_cache_timeout');
     $this->verified = config('tarjim.verified');
+    $this->split_files_by_namespace = config('tarjim.split_files_by_namespace', false);
+    $this->file_format = config('tarjim.file_format', null);
     $this->lang_path = lang_path();
+    $this->key_case = config('tarjim.key_case', []);
+
   
   }
 
