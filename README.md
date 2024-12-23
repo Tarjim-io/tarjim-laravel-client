@@ -44,6 +44,110 @@ Implement the `Tarjim\Laravel\Middleware\TarjimLocalizationMiddleware` in your `
 
 The package provides three Artisan commands to manage translations:
 
-- `php artisan tarjim:export-php`: Exports keys from tarjim.io as PHP files into the lang/ directory for Laravel's `__` function.
-- `php artisan tarjim:export-json`: Exports keys from tarjim.io as JSON files into the lang/ directory for Laravel's `__` function.
-- `php artisan tarjim:refresh-cache`: Refreshes the local tarjim.io keys cache from the remote tarjim.io service to ensure your application's keys up to date.
+```
+Available commands:
+  tarjim:export-android-xml  Download and merge tarjim keys into /lang dir as XML format
+  tarjim:export-ios-strings  Download and merge tarjim keys into /lang dir as strings format
+  tarjim:export-json         Download and merge tarjim keys into /lang dir as JSON format
+  tarjim:export-php          Download and merge tarjim keys into /lang dir as PHP format
+  tarjim:refresh-cache       Update local Tarjim cache
+```
+
+---
+
+### `php artisan tarjim:export-php`
+
+#### Description:
+Export translation keys from Tarjim.io into the `/lang` directory as PHP files for use with Laravel's `__` function.
+
+#### Usage:
+```bash
+php artisan tarjim:export-php [options]
+```
+
+#### Options:
+- `--lang_path[=LANG_PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
+- `--localesMappings[=LOCALESMAPPINGS]`: JSON string for language mappings, e.g., `{"ar":"ar_LB","en":"en_US"}`.
+- `--projectId[=PROJECTID]`: Project ID.
+- `--namespace[=NAMESPACE]`: Namespace(s); can be a string or array (multiple values allowed).
+- `--verified[=VERIFIED]`: Verification flag (boolean).
+- `--apikey[=APIKEY]`: API key for the service.
+- `-h, --help`: Display help for this command.
+
+---
+
+### `php artisan tarjim:export-json`
+
+#### Description:
+Export translation keys from Tarjim.io into the `/lang` directory as JSON files for use with Laravel's `__` function.
+
+#### Usage:
+```bash
+php artisan tarjim:export-json [options]
+```
+
+#### Options:
+- `--lang_path[=LANG_PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
+- `--localesMappings[=LOCALESMAPPINGS]`: JSON string for language mappings, e.g., `{"ar":"ar_LB","en":"en_US"}`.
+- `--projectId[=PROJECTID]`: Project ID.
+- `--namespace[=NAMESPACE]`: Namespace(s); can be a string or array (multiple values allowed).
+- `--verified[=VERIFIED]`: Verification flag (boolean).
+- `--apikey[=APIKEY]`: API key for the service.
+
+---
+
+### `php artisan tarjim:export-ios-strings`
+
+#### Description:
+Export translation keys from Tarjim.io into the `/lang` directory as strings files for iOS.
+
+#### Usage:
+```bash
+php artisan tarjim:export-ios-strings [options]
+```
+
+#### Options:
+- `--lang_path[=LANG_PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
+- `--projectId[=PROJECTID]`: Project ID.
+- `--namespace[=NAMESPACE]`: Namespace(s); can be a string or array (multiple values allowed).
+- `--verified[=VERIFIED]`: Verification flag (boolean).
+- `--split_files_by_namespace[=SPLIT_FILES_BY_NAMESPACE]`: Split files by namespace (boolean).
+- `--file_format[=FILE_FORMAT]`: File format, e.g., `%namespace%%language%%project_name%`.
+- `--key_case[=KEY_CASE]`: Key case options, e.g., `key_case_preserve`, `key_case_to_upper`, etc. (multiple values allowed).
+- `--apikey[=APIKEY]`: API key for the service.
+
+---
+
+### `php artisan tarjim:export-android-xml`
+
+#### Description:
+Export translation keys from Tarjim.io into the `/lang` directory as XML files for Android.
+
+#### Usage:
+```bash
+php artisan tarjim:export-android-xml [options]
+```
+
+#### Options:
+- `--lang_path[=LANG_PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
+- `--projectId[=PROJECTID]`: Project ID.
+- `--namespace[=NAMESPACE]`: Namespace(s); can be a string or array (multiple values allowed).
+- `--verified[=VERIFIED]`: Verification flag (boolean).
+- `--split_files_by_namespace[=SPLIT_FILES_BY_NAMESPACE]`: Split files by namespace (boolean).
+- `--file_format[=FILE_FORMAT]`: File format, e.g., `%namespace%%language%%project_name%`.
+- `--key_case[=KEY_CASE]`: Key case options, e.g., `key_case_preserve`, `key_case_to_upper`, etc. (multiple values allowed).
+- `--apikey[=APIKEY]`: API key for the service.
+
+---
+
+### `php artisan tarjim:refresh-cache`
+
+#### Description:
+Refresh the local Tarjim.io keys cache from the remote Tarjim.io service to ensure your application's keys are up to date.
+
+#### Usage:
+```bash
+php artisan tarjim:refresh-cache
+```
+
+
