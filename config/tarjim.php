@@ -1,9 +1,9 @@
 <?php
 // Required
-$project_id = '572';
+$project_id = 'PROJECT_ID';
 $cache_dir = __DIR__ . '/../public/tarjim/app';
 $logs_dir = __DIR__ . '/../storage/logs/tarjim/app';
-$apikey = 'tarjim-k3mzngbcz5cifk2i';
+$apikey = 'APIKEY';
 
 $default_namespace = 'default';
 // Optional
