@@ -20,16 +20,16 @@ class ExportTarjimPhpCommand extends Command
 	 */
 	// protected $signature = 'tarjim:export-php';
 	protected $signature = 'tarjim:export-php
-	{--lang_path= : Custom language path. If not valid, defaults to lang_path()}
-	{--localesMappings= : JSON string for language mappings (e.g., \'{"ar":"ar_LB","en":"en_US"}\')}
-	{--projectId= : Project ID}
+	{--lang-path= : Custom language path. If not valid, defaults to lang_path()}
+	{--locales-mappings= : JSON string for language mappings (e.g., \'{"ar":"ar_LB","en":"en_US"}\')}
+	{--project-id= : Project ID}
 	{--namespace=* : Namespace(s), can be a string or array}
 	{--verified= : Verification flag (boolean)}
 	{--apikey= : API key for the service}';
 
 	protected $optionMapping = [
-		'localesMappings' => ['property' => 'localesMappings', 'isJson' => true],
-		'projectId' => ['property' => 'projectId', 'isArray' => false],
+		'locales-mappings' => ['property' => 'localesMappings', 'isJson' => true],
+		'project-id' => ['property' => 'projectId', 'isArray' => false],
 		'namespace' => ['property' => 'namespace', 'isArray' => true],
 		'verified' => ['property' => 'verified', 'isArray' => false],
 		'apikey' => ['property' => 'apikey', 'isArray' => false],
@@ -65,11 +65,11 @@ class ExportTarjimPhpCommand extends Command
 		$helpers = new Helpers();
 
 		$helpers->validateOptions($this->optionMapping, $this->options(), $this->tarjimConfig, $this);
-		$helpers->processLangPath($this->option('lang_path'), $this->tarjimConfig, $this);
+		$helpers->processLangPath($this->option('lang-path'), $this->tarjimConfig, $this);
 		
 		$zipPath = storage_path('app/tarjim_php_export.zip');
 		// $extractPath = lang_path();
-		$extractPath = $this->tarjimConfig->lang_path;
+		$extractPath = $this->tarjimConfig->langPath;
 		$this->downloadAndUnzip($zipPath, $extractPath);
 	}
 
@@ -128,8 +128,8 @@ class ExportTarjimPhpCommand extends Command
 					'contents' => json_encode($this->tarjimConfig->localesMappings),
 				],
 				[
-					'name' => 'key_case_preserve',
-					'contents' => 'true'
+					'name' => 'key_case',
+					'contents' => json_encode($this->tarjimConfig->keyCase),
 				],
 				[
 					'name' => 'namespace',

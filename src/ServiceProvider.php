@@ -8,6 +8,8 @@ use Tarjim\Laravel\Commands\ExportTarjimJsonCommand;
 use Tarjim\Laravel\Commands\ExportTarjimPhpCommand;
 use Tarjim\Laravel\Commands\ExportTarjimIosStringsCommand;
 use Tarjim\Laravel\Commands\ExportTarjimAndroidXMLCommand;
+use Tarjim\Laravel\Commands\ExportTarjimSetKeysCommand;
+use Tarjim\Laravel\Commands\ExportTarjimGetKeysCommand;
 use Tarjim\Laravel\Commands\RefreshTarjimCacheCommand;
 use Tarjim\Laravel\Config\TarjimConfig;
 use Tarjim\Laravel\Middleware\TarjimLocalizationMiddleware;
@@ -60,6 +62,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 			ExportTarjimPhpCommand::class,
 			ExportTarjimIosStringsCommand::class,
 			ExportTarjimAndroidXMLCommand::class,
+			ExportTarjimSetKeysCommand::class,
+			ExportTarjimGetKeysCommand::class,
 			ExportTarjimJsonCommand::class,
 			RefreshTarjimCacheCommand::class
 		]);

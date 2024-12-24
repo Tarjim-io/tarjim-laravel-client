@@ -13,8 +13,8 @@ $additional_namespaces = [];
 $update_cache_timeout = 30;
 
 return [
-	'available_locales' => [],
-	'fallback_locale' => 'en',
+	'availableLocales' => [],
+	'fallbackLocale' => 'en',
 	'project_id' => $project_id,
 	'verified' => 'all',
 	'cache_dir' => $cache_dir,
@@ -22,10 +22,10 @@ return [
 	'apikey' => $apikey,
 	'namespace' => $default_namespace,
 	'default_namespace' => $default_namespace,
-	'locales_mappings' => [],
-	'key_case' => ['key_case_preserve' => true],
-	'split_files_by_namespace' => false,
-	'file_format' => null,
+	'localesMappings' => [],
+	'keyCase' => ['key_case_preserve' => true],
+	'splitFilesByNamespace' => false,
+	'fileFormat' => null,
 	'additional_namespaces' => $additional_namespaces,
 	'update_cache_timeout' => $update_cache_timeout,
 	'path' => __DIR__ . '/tarjim.php'

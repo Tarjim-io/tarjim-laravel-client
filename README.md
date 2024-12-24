@@ -66,9 +66,9 @@ php artisan tarjim:export-php [options]
 ```
 
 #### Options:
-- `--lang_path[=LANG_PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
-- `--localesMappings[=LOCALESMAPPINGS]`: JSON string for language mappings, e.g., `{"ar":"ar_LB","en":"en_US"}`.
-- `--projectId[=PROJECTID]`: Project ID.
+- `--lang-path[=LANG-PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
+- `--locales-mappings[=LOCALES-MAPPINGS]`: JSON string for language mappings, e.g., `{"ar":"ar_LB","en":"en_US"}`.
+- `--project-id[=PROJECT-ID]`: Project ID.
 - `--namespace[=NAMESPACE]`: Namespace(s); can be a string or array (multiple values allowed).
 - `--verified[=VERIFIED]`: Verification flag (boolean).
 - `--apikey[=APIKEY]`: API key for the service.
@@ -87,9 +87,9 @@ php artisan tarjim:export-json [options]
 ```
 
 #### Options:
-- `--lang_path[=LANG_PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
-- `--localesMappings[=LOCALESMAPPINGS]`: JSON string for language mappings, e.g., `{"ar":"ar_LB","en":"en_US"}`.
-- `--projectId[=PROJECTID]`: Project ID.
+- `--lang-path[=LANG-PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
+- `--locales-mappings[=LOCALES-MAPPINGS]`: JSON string for language mappings, e.g., `{"ar":"ar_LB","en":"en_US"}`.
+- `--project-id[=PROJECT-ID]`: Project ID.
 - `--namespace[=NAMESPACE]`: Namespace(s); can be a string or array (multiple values allowed).
 - `--verified[=VERIFIED]`: Verification flag (boolean).
 - `--apikey[=APIKEY]`: API key for the service.
@@ -107,13 +107,13 @@ php artisan tarjim:export-ios-strings [options]
 ```
 
 #### Options:
-- `--lang_path[=LANG_PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
-- `--projectId[=PROJECTID]`: Project ID.
+- `--lang-path[=LANG-PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
+- `--project-id[=PROJECT-ID]`: Project ID.
 - `--namespace[=NAMESPACE]`: Namespace(s); can be a string or array (multiple values allowed).
 - `--verified[=VERIFIED]`: Verification flag (boolean).
-- `--split_files_by_namespace[=SPLIT_FILES_BY_NAMESPACE]`: Split files by namespace (boolean).
-- `--file_format[=FILE_FORMAT]`: File format, e.g., `%namespace%%language%%project_name%`.
-- `--key_case[=KEY_CASE]`: Key case options, e.g., `key_case_preserve`, `key_case_to_upper`, etc. (multiple values allowed).
+- `--split-files-by-namespace[=SPLIT-FILES-BY-NAMESPACE]`: Split files by namespace (boolean).
+- `--file-format[=FILE-FORMAT]`: File format, e.g., `%namespace%%language%%project_name%`.
+- `--key-case[=KEY-CASE]`: Key case options, e.g., `key_case_preserve`, `key_case_to_upper`, etc. (multiple values allowed).
 - `--apikey[=APIKEY]`: API key for the service.
 
 ---
@@ -129,13 +129,13 @@ php artisan tarjim:export-android-xml [options]
 ```
 
 #### Options:
-- `--lang_path[=LANG_PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
-- `--projectId[=PROJECTID]`: Project ID.
+- `--lang-path[=LANG-PATH]`: Custom language path. Defaults to `lang_path()` if not valid.
+- `--project-id[=PROJECT-ID]`: Project ID.
 - `--namespace[=NAMESPACE]`: Namespace(s); can be a string or array (multiple values allowed).
 - `--verified[=VERIFIED]`: Verification flag (boolean).
-- `--split_files_by_namespace[=SPLIT_FILES_BY_NAMESPACE]`: Split files by namespace (boolean).
-- `--file_format[=FILE_FORMAT]`: File format, e.g., `%namespace%%language%%project_name%`.
-- `--key_case[=KEY_CASE]`: Key case options, e.g., `key_case_preserve`, `key_case_to_upper`, etc. (multiple values allowed).
+- `--split-files-by-namespace[=SPLIT-FILES-BY-NAMESPACE]`: Split files by namespace (boolean).
+- `--file-format[=FILE-FORMAT]`: File format, e.g., `%namespace%%language%%project_name%`.
+- `--key-case[=KEY-CASE]`: Key case options, e.g., `key_case_preserve`, `key_case_to_upper`, etc. (multiple values allowed).
 - `--apikey[=APIKEY]`: API key for the service.
 
 ---

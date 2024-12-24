@@ -20,24 +20,24 @@ class ExportTarjimIosStringsCommand extends Command
 	 */
 	// protected $signature = 'tarjim:export-php';
 	protected $signature = 'tarjim:export-ios-strings
-	{--lang_path= : Custom language path. If not valid, defaults to lang_path()}
-	{--projectId= : Project ID}
+	{--lang-path= : Custom language path. If not valid, defaults to lang_path()}
+	{--project-id= : Project ID}
 	{--namespace= : Namespace(s), can be a string or array}
 	{--verified= : Verification flag (boolean)}
-	{--split_files_by_namespace= : Split files by namespace (boolean)}
-	{--file_format= : File format e.g. %namespace%%language%%project_name%}
-	{--key_case=* : Array of key case options. Available options: key_case_preserve (default), key_case_to_upper, key_case_to_proper, key_case_to_lower, key_no_quotes, key_wrap_double_quote.}
+	{--split-files-by-namespace= : Split files by namespace (boolean)}
+	{--file-format= : File format e.g. %namespace%%language%%project_name%}
+	{--key-case=* : Array of key case options. Available options: key_case_preserve (default), key_case_to_upper, key_case_to_proper, key_case_to_lower, key_no_quotes, key_wrap_double_quote.}
 	{--apikey= : API key for the service}';
 
 
 	protected $optionMapping = [
-		'projectId' => ['property' => 'projectId', 'isArray' => false],
+		'project-id' => ['property' => 'projectId', 'isArray' => false],
 		'namespace' => ['property' => 'namespace', 'isArray' => true],
 		'verified' => ['property' => 'verified', 'isArray' => false],
 		'apikey' => ['property' => 'apikey', 'isArray' => false],
-		'split_files_by_namespace' => ['property' => 'split_files_by_namespace', 'isBoolean' => true],
-		'key_case' => ['property' => 'key_case', 'keyCase' => true],
-		'file_format' => ['property' => 'file_format', 'isArray' => false],
+		'split-files-by-namespace' => ['property' => 'splitFilesByNamespace', 'isBoolean' => true],
+		'key-case' => ['property' => 'keyCase', 'keyCase' => true],
+		'file-format' => ['property' => 'fileFormat', 'isArray' => false],
 
 	];
 
@@ -71,11 +71,11 @@ class ExportTarjimIosStringsCommand extends Command
 		$helpers = new Helpers();
 
 		$helpers->validateOptions($this->optionMapping, $this->options(), $this->tarjimConfig, $this);
-		$helpers->processLangPath($this->option('lang_path'), $this->tarjimConfig, $this);
+		$helpers->processLangPath($this->option('lang-path'), $this->tarjimConfig, $this);
 
 		$zipPath = storage_path('app/tarjim_php_export.zip');
 		// $extractPath = lang_path();
-		$extractPath = $this->tarjimConfig->lang_path;
+		$extractPath = $this->tarjimConfig->langPath;
 		$this->downloadAndUnzip($zipPath, $extractPath);
 	}
 
@@ -136,7 +136,7 @@ class ExportTarjimIosStringsCommand extends Command
 				],
 				[
 					'name' => 'key_case',
-					'contents' => json_encode($this->tarjimConfig->key_case),
+					'contents' => json_encode($this->tarjimConfig->keyCase),
 				],
 				[
 					'name' => 'namespace',
@@ -144,11 +144,11 @@ class ExportTarjimIosStringsCommand extends Command
 				],
 				[
 					'name' => 'split_files_by_namespace',
-					'contents' => $this->tarjimConfig->split_files_by_namespace || false,
+					'contents' => $this->tarjimConfig->splitFilesByNamespace || false,
 				],
 				[
                     'name' => 'file_format',
-                    'contents' => $this->tarjimConfig->file_format,
+                    'contents' => $this->tarjimConfig->fileFormat,
                 ],
                 
 				[
