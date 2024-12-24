@@ -50,6 +50,8 @@ Available commands:
   tarjim:export-ios-strings  Download and merge tarjim keys into /lang dir as strings format
   tarjim:export-json         Download and merge tarjim keys into /lang dir as JSON format
   tarjim:export-php          Download and merge tarjim keys into /lang dir as PHP format
+  tarjim:get-keys            Get keys and value for specific language or all
+  tarjim:set-keys            Add keys and value for specific language
   tarjim:refresh-cache       Update local Tarjim cache
 ```
 
@@ -72,8 +74,6 @@ php artisan tarjim:export-php [options]
 - `--namespace[=NAMESPACE]`: Namespace(s); can be a string or array (multiple values allowed).
 - `--verified[=VERIFIED]`: Verification flag (boolean).
 - `--apikey[=APIKEY]`: API key for the service.
-- `-h, --help`: Display help for this command.
-
 ---
 
 ### `php artisan tarjim:export-json`
@@ -139,6 +139,44 @@ php artisan tarjim:export-android-xml [options]
 - `--apikey[=APIKEY]`: API key for the service.
 
 ---
+### `php artisan tarjim:get-keys`
+
+#### Description:
+Get keys and value for specific language or all.
+
+#### Usage:
+```bash
+php artisan tarjim:get-keys [options]
+```
+
+#### Options:
+- `--project-id[=PROJECT-ID]`: Project ID.
+- `--key[=KEY]`: Key can be a string or array of keys (multiple values allowed).
+- `--namespace[=NAMESPACE]`: Namespace(s), can be a string or array.
+- `--language[=LANGUAGE]`: Language.
+- `--apikey[=APIKEY]`: API key for the service.
+
+---
+
+### `php artisan tarjim:set-keys`
+
+#### Description:
+Add keys and value for specific language.
+
+#### Usage:
+```bash
+php artisan tarjim:set-keys [options]
+```
+
+#### Options:
+- `--project-id[=PROJECT-ID]`: Project ID.
+- `--key-value[=KEY-VALUE]`: Key and value JSON (e.g., '{"KEY":"VALUE"...').
+- `--namespace[=NAMESPACE]`: Namespace(s), can be a string or array.
+- `--language[=LANGUAGE]`: Language.
+- `--apikey[=APIKEY]`: API key for the service.
+
+---
+  
 
 ### `php artisan tarjim:refresh-cache`
 
