@@ -1,6 +1,6 @@
 ## Overview
 
-The `tarjim-laravel-client` is a Laravel package designed to facilitate the integration of tarjim.io translations into Laravel applications. It allows for seamless synchronization and management of translation files and localization settings between your Laravel application and the Tarjim service.
+The `tarjim-laravel-client` is a Laravel package designed to facilitate the integration of [Tarjim.io](http://tarjim.io/) translations into Laravel applications. It allows for seamless synchronization and management of translation files and localization settings between your Laravel application and the Tarjim service.
 
 ## Features
 
@@ -60,7 +60,7 @@ Available commands:
 ### `php artisan tarjim:export-php`
 
 #### Description:
-Export translation keys from Tarjim.io into the `/lang` directory as PHP files for use with Laravel's `__` function.
+Export translation keys from [Tarjim.io](http://tarjim.io/) into the `/lang` directory as PHP files for use with Laravel's `__` function.
 
 #### Usage:
 ```bash
@@ -79,7 +79,7 @@ php artisan tarjim:export-php [options]
 ### `php artisan tarjim:export-json`
 
 #### Description:
-Export translation keys from Tarjim.io into the `/lang` directory as JSON files for use with Laravel's `__` function.
+Export translation keys from [Tarjim.io](http://tarjim.io/) into the `/lang` directory as JSON files for use with Laravel's `__` function.
 
 #### Usage:
 ```bash
@@ -99,7 +99,7 @@ php artisan tarjim:export-json [options]
 ### `php artisan tarjim:export-ios-strings`
 
 #### Description:
-Export translation keys from Tarjim.io into the `/lang` directory as strings files for iOS.
+Export translation keys from [Tarjim.io](http://tarjim.io/) into the `/lang` directory as strings files for iOS.
 
 #### Usage:
 ```bash
@@ -121,7 +121,7 @@ php artisan tarjim:export-ios-strings [options]
 ### `php artisan tarjim:export-android-xml`
 
 #### Description:
-Export translation keys from Tarjim.io into the `/lang` directory as XML files for Android.
+Export translation keys from [Tarjim.io](http://tarjim.io/) into the `/lang` directory as XML files for Android.
 
 #### Usage:
 ```bash
@@ -181,7 +181,7 @@ php artisan tarjim:set-keys [options]
 ### `php artisan tarjim:refresh-cache`
 
 #### Description:
-Refresh the local Tarjim.io keys cache from the remote Tarjim.io service to ensure your application's keys are up to date.
+Refresh the local [Tarjim.io](http://tarjim.io/) keys cache from the remote [Tarjim.io](http://tarjim.io/) service to ensure your application's keys are up to date.
 
 #### Usage:
 ```bash
