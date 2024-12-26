@@ -2,7 +2,8 @@
     "name": "joylab/tarjim-laravel-client",
     "version": "1.0",
     "type": "library",
-    "description": "Laravel SDK for Tarjim (https://tarjim.io/)",
+    "description": "Laravel SDK for Tarjim.io (https://tarjim.io)",
+    "homepage": "https://tarjim.io",
     "keywords": [
         "laravel",
         "tarjim",
