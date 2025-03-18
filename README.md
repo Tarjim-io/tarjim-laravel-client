@@ -49,7 +49,7 @@ php artisan tarjim:export-php --project-id=123 --namespace="common" --lang-path=
 |--------|-------------|
 | `--lang-path=` | Custom language path. Defaults to `lang_path()`. |
 | `--locales-mappings=` | JSON mapping for languages, e.g., `{"ar":"ar_LB","en":"en_US"}`. |
-| `--project-id=` | Specify the Tarjim project ID. |
+| `--project-id=` | Specify the Tarjim project ID Or Branch ID. |
 | `--namespace=` | Namespace(s), accepts a string or array. |
 | `--verified=` | Set to `true` to export only verified keys. |
 | `--apikey=` | API key for authentication. |
@@ -66,7 +66,7 @@ php artisan tarjim:export-json --project-id=123 --namespace="frontend" --lang-pa
 |--------|-------------|
 | `--lang-path=` | Custom language path. Defaults to `lang_path()`. |
 | `--locales-mappings=` | JSON mapping for languages, e.g., `{"fr":"fr_CA","es":"es_MX"}`. |
-| `--project-id=` | Specify the Tarjim project ID. |
+| `--project-id=` | Specify the Tarjim project ID Or Branch ID. |
 | `--namespace=` | Namespace(s), accepts a string or array. |
 | `--verified=` | Set to `true` to export only verified keys. |
 | `--apikey=` | API key for authentication. |
@@ -82,7 +82,7 @@ php artisan tarjim:export-ios-strings --project-id=123 --namespace="app" --file-
 | Option | Description |
 |--------|-------------|
 | `--lang-path=` | Custom language path. Defaults to `lang_path()`. |
-| `--project-id=` | Specify the Tarjim project ID. |
+| `--project-id=` | Specify the Tarjim project ID Or Branch ID. |
 | `--namespace=` | Namespace(s), accepts a string or array. |
 | `--verified=` | Set to `true` to export only verified keys. |
 | `--split-files-by-namespace=` | Set to `true` to split files by namespace. |
@@ -101,7 +101,7 @@ php artisan tarjim:export-android-xml --project-id=123 --namespace="mobile" --fi
 | Option | Description |
 |--------|-------------|
 | `--lang-path=` | Custom language path. Defaults to `lang_path()`. |
-| `--project-id=` | Specify the Tarjim project ID. |
+| `--project-id=` | Specify the Tarjim project ID Or Branch ID. |
 | `--namespace=` | Namespace(s), accepts a string or array. |
 | `--verified=` | Set to `true` to export only verified keys. |
 | `--split-files-by-namespace=` | Set to `true` to split files by namespace. |
